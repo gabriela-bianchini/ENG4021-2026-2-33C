@@ -1,30 +1,47 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de filmes</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 20px; background: #f4f6f8; }
+    .topo { display: flex; justify-content: space-between; align-items: center; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+    .card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 14px; }
+    .card img { width: 100%; border-radius: 8px; }
+    .acoes { display: flex; gap: 8px; margin-top: 10px; }
+    .acoes form { margin: 0; }
+    .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; border: none;
+           background: #41508c; color: #fff; text-decoration: none; font-size: 14px; cursor: pointer; }
+    .btn.perigo { background: #d64545; }
+  </style>
 </head>
 <body>
-    <div class="header">
-        <svg style="color: white;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-film size-5 text-primary-foreground" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M7 3v18"></path><path d="M3 7.5h4"></path><path d="M3 12h18"></path><path d="M3 16.5h4"></path><path d="M17 3v18"></path><path d="M17 7.5h4"></path><path d="M17 16.5h4"></path></svg>
-        <span>Lumière</span>
-    </div>
+  <div class="topo">
+    <h1>Catálogo de filmes</h1>
+    <a class="btn" href="{% url 'criar_filme' %}">+ Novo filme</a>
+  </div>
 
-    <div class="catalog">
-        {% for movie in movies %}
-        <div class="card" style="width: 18rem;">
-            <img style="width: 100px;" src="{{ movie.image_url }}" alt="{{ movie.title }}" class="card-img-top">
-            <div>
-                <h5>{{ movie.title }}</h5>
-                <p>{{ movie.description }}</p>
-            </div>
+  <div class="grade">
+    {% for movie in movies %}
+      <div class="card">
+        <img src="{{ movie.image_url }}" alt="{{ movie.title }}">
+        <h3>{{ movie.title }}</h3>
+        <p>{{ movie.description }}</p>
+
+        <div class="acoes">
+          <a class="btn" href="{% url 'editar_filme' movie.pk %}">Atualizar</a>
+          <form method="POST" action="{% url 'deletar_filme' movie.pk %}"
+                onsubmit="return confirm('Deletar {{ movie.title|escapejs }}?');">
+            {% csrf_token %}
+            <button type="submit" class="btn perigo">Deletar</button>
+          </form>
         </div>
-        {% empty %}
-        <p>No movies registered yet.</p>
-        {% endfor %}
-    </div>
+      </div>
+    {% empty %}
+      <p>Nenhum filme cadastrado ainda.</p>
+    {% endfor %}
+  </div>
 </body>
 </html>
