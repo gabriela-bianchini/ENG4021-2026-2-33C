@@ -1,28 +1,34 @@
-body {
-    margin: 0px;
-    font-family: "Space Grotesk", ui-sans-serif, system-ui;
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #41508c;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.header {
-    background-color: #090820;
-    padding: 5px 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.btn:hover {
+  opacity: 0.9;
 }
 
-.header span {
-    margin: 0px;
-    color: white;
-    font-weight: bold;
+.btn.perigo {
+  background: #d64545;
 }
 
-.catalog {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.btn-novo {
+  margin-left: auto; /* empurra pro canto direito do header */
 }
 
-.card {
-    border: 2px solid black;
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.acoes form {
+  margin: 0;
 }
