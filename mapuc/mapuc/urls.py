@@ -20,5 +20,8 @@ from mapucapp.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home2),
+    path('', home2, name='home2'),
+    path('filmes/novo/', criar_filme, name='criar_filme'),
+    path('filmes/<int:pk>/editar/', editar_filme, name='editar_filme'),
+    path('filmes/<int:pk>/deletar/', deletar_filme, name='deletar_filme'),
 ]
